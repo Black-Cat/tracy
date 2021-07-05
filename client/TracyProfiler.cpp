@@ -3368,6 +3368,17 @@ int64_t Profiler::GetTimeQpc()
 extern "C" {
 #endif
 
+TRACY_API ___tracy_source_location_data* ___tracy_alloc_src_loc(char* file, char* name, char* function, uint32_t line, uint32_t color)
+{
+    ___tracy_source_location_data* srcloc = (___tracy_source_location_data*)malloc(sizeof(___tracy_source_location_data));
+    srcloc->color = color;
+    srcloc->line = line;
+    srcloc->file = strdup(file);
+    srcloc->name = strdup(name);
+    srcloc->function = strdup(function);
+    return srcloc;
+}
+
 TRACY_API TracyCZoneCtx ___tracy_emit_zone_begin( const struct ___tracy_source_location_data* srcloc, int active )
 {
     ___tracy_c_zone_context ctx;
